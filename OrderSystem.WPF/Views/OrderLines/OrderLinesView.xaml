@@ -1,0 +1,96 @@
+﻿<UserControl
+    x:Class="OrderSystem.WPF.Views.OrderLines.OrderLinesView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:behaviors="clr-namespace:OrderSystem.WPF.Behaviors"
+    xmlns:conv="clr-namespace:OrderSystem.WPF.Converters"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:OrderSystem.WPF.Views.OrderLines"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:resx="clr-namespace:OrderSystem.Data.Resources;assembly=OrderSystem.Data"
+    xmlns:wresx="clr-namespace:OrderSystem.WPF.Resources"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    mc:Ignorable="d">
+    <UserControl.Resources>
+        <conv:PriceInCentsToStringConverter x:Key="convPriceInCentsToString" IncludeCurrencySign="True" />
+    </UserControl.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="Auto" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <ListView
+            x:Name="ProductsGroupsListView"
+            Grid.Row="0"
+            Grid.Column="0"
+            Grid.ColumnSpan="4"
+            ItemsSource="{Binding OrderLinesSource}">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn
+                        Width="40"
+                        DisplayMemberBinding="{Binding Id}"
+                        Header="{x:Static resx:OrderResources.Id}" />
+                    <GridViewColumn
+                        Width="120"
+                        DisplayMemberBinding="{Binding Product.Name}"
+                        Header="{x:Static resx:OrderResources.Product}" />
+                    <GridViewColumn Width="65" Header="{x:Static resx:OrderResources.PricePerUnit}">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock
+                                    HorizontalAlignment="Right"
+                                    Text="{Binding PricePerUnitInCents, Converter={StaticResource convPriceInCentsToString}}"
+                                    TextAlignment="Right" />
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Width="65" Header="{x:Static resx:OrderResources.Quantity}">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock
+                                    HorizontalAlignment="Right"
+                                    Text="{Binding Quantity}"
+                                    TextAlignment="Right" />
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Width="65" Header="{x:Static resx:OrderResources.SubTotal}">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock
+                                    HorizontalAlignment="Right"
+                                    Text="{Binding TotalPriceInCents, Converter={StaticResource convPriceInCentsToString}}"
+                                    TextAlignment="Right" />
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <Button
+            Grid.Row="1"
+            Grid.Column="1"
+            Command="{Binding AddCommand}"
+            Content="{x:Static wresx:WpfOrderResources.Add}" />
+        <Button
+            Grid.Row="1"
+            Grid.Column="2"
+            Command="{Binding EditCommand}"
+            CommandParameter="{Binding SelectedItem, ElementName=ProductsGroupsListView}"
+            Content="{x:Static wresx:WpfOrderResources.Edit}" />
+        <Button
+            Grid.Row="1"
+            Grid.Column="3"
+            Command="{Binding DeleteCommand}"
+            CommandParameter="{Binding SelectedItem, ElementName=ProductsGroupsListView}"
+            Content="{x:Static wresx:WpfOrderResources.Delete}" />
+    </Grid>
+</UserControl>

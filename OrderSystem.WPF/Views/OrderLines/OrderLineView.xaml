@@ -1,0 +1,125 @@
+﻿<UserControl
+    x:Class="OrderSystem.WPF.Views.OrderLines.OrderLineView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:behaviors="clr-namespace:OrderSystem.WPF.Behaviors"
+    xmlns:classes="clr-namespace:OrderSystem.WPF.Classes"
+    xmlns:conv="clr-namespace:OrderSystem.WPF.Converters"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:OrderSystem.WPF.Views.OrderLines"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:nav="clr-namespace:OrderSystem.WPF.Navigation"
+    xmlns:resx="clr-namespace:OrderSystem.Data.Resources;assembly=OrderSystem.Data"
+    xmlns:wresx="clr-namespace:OrderSystem.WPF.Resources"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    mc:Ignorable="d">
+    <UserControl.Resources>
+        <conv:PriceInCentsToStringConverter x:Key="convPriceInCentsToString" IncludeCurrencySign="True" />
+    </UserControl.Resources>
+    <nav:WindowSettings.Settings>
+        <nav:WindowSettings
+            Width="345"
+            Height="255"
+            ResizeMode="NoResize" />
+    </nav:WindowSettings.Settings>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Label
+            Grid.Row="0"
+            Grid.Column="0"
+            Content="{x:Static resx:OrderResources.Product}" />
+        <ComboBox
+            Grid.Row="0"
+            Grid.Column="1"
+            behaviors:ValidationHelper.ValidationState="{Binding Validation[Product]}"
+            DisplayMemberPath="Name"
+            ItemsSource="{Binding ProductsLookup}"
+            SelectedValue="{Binding CurrentObject.Product}" />
+        <TextBlock
+            Grid.Row="0"
+            Grid.Column="1"
+            Margin="11,8,0,0"
+            Foreground="Gray"
+            IsHitTestVisible="False"
+            Text="{x:Static wresx:WpfOrderResources.ChooseProduct}"
+            Visibility="{Binding CurrentObject.Product, Converter={StaticResource NullToVisibilityConverter}}" />
+        <Label
+            Grid.Row="1"
+            Grid.Column="1"
+            behaviors:ValidationHelper.ValidationState="{Binding Validation[Product]}"
+            Style="{StaticResource ValidationTextLabel}" />
+        <Label
+            Grid.Row="2"
+            Grid.Column="0"
+            Content="{x:Static resx:OrderResources.PricePerUnit}" />
+        <TextBox
+            Grid.Row="2"
+            Grid.Column="1"
+            behaviors:ValidationHelper.ValidationState="{Binding Validation[PricePerUnitInCents]}"
+            Text="{classes:EmptyCurrencyBinding CurrentObject.PricePerUnitInCents}" />
+        <Label
+            Grid.Row="3"
+            Grid.Column="1"
+            behaviors:ValidationHelper.ValidationState="{Binding Validation[PricePerUnitInCents]}"
+            Style="{StaticResource ValidationTextLabel}" />
+        <Label
+            Grid.Row="4"
+            Grid.Column="0"
+            Content="{x:Static resx:OrderResources.Quantity}" />
+        <TextBox
+            Grid.Row="4"
+            Grid.Column="1"
+            behaviors:ValidationHelper.ValidationState="{Binding Validation[Quantity]}"
+            Text="{classes:EmptyIntBinding CurrentObject.Quantity}" />
+        <Label
+            Grid.Row="5"
+            Grid.Column="1"
+            behaviors:ValidationHelper.ValidationState="{Binding Validation[Quantity]}"
+            Style="{StaticResource ValidationTextLabel}" />
+        <Label
+            Grid.Row="6"
+            Grid.Column="0"
+            Content="{x:Static resx:OrderResources.SubTotal}" />
+        <Label
+            Grid.Row="6"
+            Grid.Column="1"
+            Content="{Binding CurrentObject.TotalPriceInCents, Converter={StaticResource convPriceInCentsToString}}"
+            FontWeight="Bold" />
+        <Grid
+            Grid.Row="7"
+            Grid.Column="0"
+            Grid.ColumnSpan="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <Button
+                Grid.Row="0"
+                Grid.Column="1"
+                Command="{Binding OkCommand}"
+                Content="{x:Static wresx:WpfOrderResources.Save}"
+                IsDefault="True" />
+            <Button
+                Grid.Row="0"
+                Grid.Column="2"
+                Command="{Binding CancelCommand}"
+                Content="{x:Static wresx:WpfOrderResources.Cancel}"
+                IsCancel="True" />
+        </Grid>
+    </Grid>
+</UserControl>

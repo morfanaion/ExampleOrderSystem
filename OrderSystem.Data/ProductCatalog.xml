@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<ProductCatalog>
+  <ProductGroups>
+    <ProductGroup Id="M" Name="Medicatie" />
+    <ProductGroup Id="K" Name="Kleding" />
+    <ProductGroup Id="I" Name="Instrumenten" />
+    <ProductGroup Id="A" Name="Meetapparatuur" />
+    <ProductGroup Id="D" Name="Disposables" />
+    <ProductGroup Id="F" Name="Facilitair" />
+  </ProductGroups>
+  <Products>
+    <Product Id="0001" ProductGroupId="M" Name="Paracetamol" PriceInCents="129" />
+    <Product Id="0002" ProductGroupId="M" Name="Oxazepam" PriceInCents="235" />
+    <Product Id="0003" ProductGroupId="M" Name="Diclofenac" PriceInCents="434" />
+    <Product Id="0004" ProductGroupId="M" Name="Omeprazol" PriceInCents="457" />
+    <Product Id="0005" ProductGroupId="M" Name="Acetylsalicylzuur" PriceInCents="805" />
+    <Product Id="0006" ProductGroupId="M" Name="Simvastatine" PriceInCents="700" />
+    <Product Id="0007" ProductGroupId="M" Name="Metoprolol" PriceInCents="2000" />
+    <Product Id="0008" ProductGroupId="M" Name="Macrogol" PriceInCents="99" />
+    <Product Id="0009" ProductGroupId="M" Name="Salbutamol" PriceInCents="497" />
+    <Product Id="0010" ProductGroupId="M" Name="Metformine" PriceInCents="111" />
+    <Product Id="0011" ProductGroupId="M" Name="Furosemide" PriceInCents="237" />
+    <Product Id="0012" ProductGroupId="K" Name="Doktersjas" PriceInCents="3450" />
+    <Product Id="0013" ProductGroupId="K" Name="Tuniek verpleegkundige" PriceInCents="2250" />
+    <Product Id="0014" ProductGroupId="K" Name="Uniform baliemedewerker" PriceInCents="3600" />
+    <Product Id="0015" ProductGroupId="K" Name="Uniform schoonmaakster" PriceInCents="2500" />
+    <Product Id="0016" ProductGroupId="K" Name="Loodschort" PriceInCents="16000" />
+    <Product Id="0017" ProductGroupId="I" Name="Stethoscoop" PriceInCents="2500" />
+    <Product Id="0018" ProductGroupId="I" Name="Otoscoop" PriceInCents="25900" />
+    <Product Id="0019" ProductGroupId="I" Name="Vaginaal speculum" PriceInCents="3600" />
+    <Product Id="0020" ProductGroupId="I" Name="Rektoscoop" PriceInCents="36760" />
+    <Product Id="0021" ProductGroupId="I" Name="Keelspiegel" PriceInCents="490" />
+    <Product Id="0022" ProductGroupId="I" Name="Neusspeculum" PriceInCents="2295" />
+    <Product Id="0023" ProductGroupId="I" Name="Oogbeitel" PriceInCents="8665" />
+    <Product Id="0024" ProductGroupId="A" Name="Bloeddrukmeter" PriceInCents="2700" />
+    <Product Id="0025" ProductGroupId="A" Name="Oorthermometer" PriceInCents="1250" />
+    <Product Id="0026" ProductGroupId="A" Name="Saturatiemeter" PriceInCents="1750" />
+    <Product Id="0027" ProductGroupId="D" Name="Wegwerphandschoenen" PriceInCents="250" />
+    <Product Id="0028" ProductGroupId="D" Name="Injectienaald" PriceInCents="59" />
+    <Product Id="0029" ProductGroupId="D" Name="Tongspatel" PriceInCents="12" />
+    <Product Id="0030" ProductGroupId="F" Name="Printerpapier" PriceInCents="450" />
+    <Product Id="0031" ProductGroupId="F" Name="Nietjes" PriceInCents="129" />
+    <Product Id="0032" ProductGroupId="F" Name="Nietmachine" PriceInCents="1350" />
+    <Product Id="0033" ProductGroupId="F" Name="Printertoner" PriceInCents="15900" />
+    <Product Id="0034" ProductGroupId="F" Name="Archiefmap" PriceInCents="550" />
+  </Products>
+</ProductCatalog>

@@ -1,0 +1,5 @@
+<Solution>
+  <Project Path="OrderSystem.ConsoleTest/OrderSystem.ConsoleTest.csproj" />
+  <Project Path="OrderSystem.Data/OrderSystem.Data.csproj" />
+  <Project Path="OrderSystem.WPF/OrderSystem.WPF.csproj" Id="f5256a82-c169-4e71-bd0a-ee5a6eaf9de0" />
+</Solution>
