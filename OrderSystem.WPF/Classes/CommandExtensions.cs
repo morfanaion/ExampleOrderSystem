@@ -26,13 +26,17 @@ namespace OrderSystem.WPF.Classes
 
             if (e.NewValue is true)
             {
-                button.Loaded += (_, __) =>
+                RoutedEventHandler? handler = null;
+                handler = (s, args) =>
                 {
-                    if (button.Command is ICommand original)
+                    if (button.Command is ICommand original && original is not CommitCommandWrapper)
                     {
+                        button.Loaded -= handler;
                         button.Command = new CommitCommandWrapper(original, button);
                     }
                 };
+                button.Loaded += handler;
+                
             }
         }
     }

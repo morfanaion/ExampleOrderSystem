@@ -50,11 +50,14 @@ namespace OrderSystem.Data.Models
         {
             get
             {
-                _orderLines ??= new RelationalList<OrderLine>(DataManager.Instance.OrderLines.Where(line => line.OrderId == Id), DataManager.Instance.OrderLines.Add, DataManager.Instance.OrderLines.Remove);
-                _orderLines.CollectionChanged += OrderLines_CollectionChanged;
-                foreach (OrderLine line in _orderLines)
+                if (_orderLines == null)
                 {
-                    line.PropertyChanged += Line_PropertyChanged;
+                    _orderLines = new RelationalList<OrderLine>(DataManager.Instance.OrderLines.Where(line => line.OrderId == Id), DataManager.Instance.OrderLines.Add, DataManager.Instance.OrderLines.Remove);
+                    _orderLines.CollectionChanged += OrderLines_CollectionChanged;
+                    foreach (OrderLine line in _orderLines)
+                    {
+                        line.PropertyChanged += Line_PropertyChanged;
+                    }
                 }
                 return _orderLines;
             }
@@ -85,7 +88,7 @@ namespace OrderSystem.Data.Models
             {
                 foreach (INotifyPropertyChanged item in items)
                 {
-                    item.PropertyChanged += Line_PropertyChanged;
+                    item.PropertyChanged -= Line_PropertyChanged;
                 }
             }
             switch (e.Action)
@@ -137,6 +140,7 @@ namespace OrderSystem.Data.Models
                 orderLine.PropertyChanged -= Line_PropertyChanged;
             }
             OrderLines.Reset();
+            _orderLines!.CollectionChanged -= OrderLines_CollectionChanged;
             _orderLines = null;
             RaisePropertyChanged(nameof(PlacedAt));
             RaisePropertyChanged(nameof(OrderLines));

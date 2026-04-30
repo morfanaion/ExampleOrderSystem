@@ -9,16 +9,41 @@ namespace OrderSystem.WPF.Behaviors
 {
     public class SyncWindowSizeBehavior : Behavior<ContentControl>
     {
+        private DependencyPropertyDescriptor? _dpd;
+
         protected override void OnAttached()
         {
             base.OnAttached();
 
-            DependencyPropertyDescriptor.FromProperty(ContentControl.ContentProperty, typeof(ContentControl)).AddValueChanged(AssociatedObject, OnContentChanged);
+            _dpd = DependencyPropertyDescriptor
+            .FromProperty(ContentControl.ContentProperty, typeof(ContentControl));
+
+            _dpd.AddValueChanged(AssociatedObject, OnContentChanged);
+            AssociatedObject.Unloaded += OnUnloaded;
         }
 
         protected override void OnDetaching()
         {
-            DependencyPropertyDescriptor.FromProperty(ContentControl.ContentProperty, typeof(ContentControl)).RemoveValueChanged(AssociatedObject, OnContentChanged);
+            Cleanup();
+            base.OnDetaching();
+        }
+        private void OnUnloaded(object sender, RoutedEventArgs e)
+        {
+            Cleanup();
+        }
+
+        private void Cleanup()
+        {
+            if(_dpd != null)
+            {
+                _dpd.RemoveValueChanged(AssociatedObject, OnContentChanged);
+                _dpd = null;
+            }
+
+            if (AssociatedObject != null)
+            {
+                AssociatedObject.Unloaded -= OnUnloaded;
+            }
         }
 
         private void OnContentChanged(object? sender, EventArgs e)

@@ -17,6 +17,7 @@ namespace OrderSystem.WPF.Services
             {
                 viewModel.Finish -= Close;
                 theWindow.Close();
+                theWindow.DataContext = null;
             }
         }
 
@@ -64,6 +65,7 @@ namespace OrderSystem.WPF.Services
                 }
                 else
                 {
+                    theWindow.DataContext = null;
                     viewModel.Finish -= Close;
                     theWindow.Closing -= Closing;
                 }
