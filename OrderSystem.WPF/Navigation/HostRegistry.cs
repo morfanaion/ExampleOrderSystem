@@ -1,4 +1,4 @@
-﻿using OrderSystem.WPF.ViewModels;
+﻿using OrderSystem.Business.ViewModels;
 using System.Runtime.CompilerServices;
 using System.Windows;
 

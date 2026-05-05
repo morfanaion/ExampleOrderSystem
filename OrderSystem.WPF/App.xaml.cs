@@ -1,10 +1,11 @@
-﻿using OrderSystem.WPF.Orchestration;
+﻿using OrderSystem.Business.Orchestration;
+using OrderSystem.Business.Services;
+using OrderSystem.Business.ViewModels;
+using OrderSystem.Business.ViewModels.Orders;
+using OrderSystem.Business.ViewModels.ProductGroups;
+using OrderSystem.Business.ViewModels.Products;
 using OrderSystem.WPF.ResourceDictionaries;
 using OrderSystem.WPF.Services;
-using OrderSystem.WPF.ViewModels;
-using OrderSystem.WPF.ViewModels.Orders;
-using OrderSystem.WPF.ViewModels.ProductGroups;
-using OrderSystem.WPF.ViewModels.Products;
 using System.Globalization;
 using System.Windows;
 using System.Windows.Markup;

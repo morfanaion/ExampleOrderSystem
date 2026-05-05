@@ -8,7 +8,7 @@
     xmlns:local="clr-namespace:OrderSystem.WPF"
     xmlns:navigation="clr-namespace:OrderSystem.WPF.Navigation"
     xmlns:views="clr-namespace:OrderSystem.WPF.Views"
-    xmlns:vm="clr-namespace:OrderSystem.WPF.ViewModels">
+    xmlns:vm="clr-namespace:OrderSystem.Business.ViewModels;assembly=OrderSystem.Business">
     <Application.Resources>
         <conv:NullToVisibilityConverter x:Key="NullToVisibilityConverter" />
 

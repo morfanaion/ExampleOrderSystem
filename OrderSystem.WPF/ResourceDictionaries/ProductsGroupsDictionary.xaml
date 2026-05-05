@@ -3,7 +3,7 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:views="clr-namespace:OrderSystem.WPF.Views.ProductGroups"
-    xmlns:vm="clr-namespace:OrderSystem.WPF.ViewModels.ProductGroups">
+    xmlns:vm="clr-namespace:OrderSystem.Business.ViewModels.ProductGroups;assembly=OrderSystem.Business">
     <DataTemplate DataType="{x:Type vm:ProductGroupsViewModel}">
         <views:ProductGroupsView />
     </DataTemplate>

@@ -10,7 +10,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:nav="clr-namespace:OrderSystem.WPF.Navigation"
     xmlns:resx="clr-namespace:OrderSystem.Data.Resources;assembly=OrderSystem.Data"
-    xmlns:wresx="clr-namespace:OrderSystem.WPF.Resources"
+    xmlns:wresx="clr-namespace:OrderSystem.Business.Resources;assembly=OrderSystem.Business"
     d:DesignHeight="450"
     d:DesignWidth="800"
     mc:Ignorable="d">
@@ -55,7 +55,7 @@
             Margin="11,8,0,0"
             Foreground="Gray"
             IsHitTestVisible="False"
-            Text="{x:Static wresx:WpfOrderResources.ChooseProduct}"
+            Text="{x:Static wresx:OrderBusinessResources.ChooseProduct}"
             Visibility="{Binding CurrentObject.Product, Converter={StaticResource NullToVisibilityConverter}}" />
         <Label
             Grid.Row="1"
@@ -112,13 +112,13 @@
                 Grid.Row="0"
                 Grid.Column="1"
                 Command="{Binding OkCommand}"
-                Content="{x:Static wresx:WpfOrderResources.Save}"
+                Content="{x:Static wresx:OrderBusinessResources.Save}"
                 IsDefault="True" />
             <Button
                 Grid.Row="0"
                 Grid.Column="2"
                 Command="{Binding CancelCommand}"
-                Content="{x:Static wresx:WpfOrderResources.Cancel}"
+                Content="{x:Static wresx:OrderBusinessResources.Cancel}"
                 IsCancel="True" />
         </Grid>
     </Grid>

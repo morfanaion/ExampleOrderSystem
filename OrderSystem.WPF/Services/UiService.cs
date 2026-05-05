@@ -1,5 +1,6 @@
-﻿using OrderSystem.WPF.Navigation;
-using OrderSystem.WPF.ViewModels;
+﻿using OrderSystem.Business.Services;
+using OrderSystem.Business.ViewModels;
+using OrderSystem.WPF.Navigation;
 using System.ComponentModel;
 using System.Windows;
 

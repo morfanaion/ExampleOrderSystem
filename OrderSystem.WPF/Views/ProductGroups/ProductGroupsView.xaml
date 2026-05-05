@@ -7,7 +7,7 @@
     xmlns:local="clr-namespace:OrderSystem.WPF.Views.ProductGroups"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:resx="clr-namespace:OrderSystem.Data.Resources;assembly=OrderSystem.Data"
-    xmlns:wresx="clr-namespace:OrderSystem.WPF.Resources"
+    xmlns:wresx="clr-namespace:OrderSystem.Business.Resources;assembly=OrderSystem.Business"
     d:DesignHeight="450"
     d:DesignWidth="800"
     mc:Ignorable="d">
@@ -39,18 +39,18 @@
             Grid.Row="1"
             Grid.Column="1"
             Command="{Binding AddCommand}"
-            Content="{x:Static wresx:WpfOrderResources.Add}" />
+            Content="{x:Static wresx:OrderBusinessResources.Add}" />
         <Button
             Grid.Row="1"
             Grid.Column="2"
             Command="{Binding EditCommand}"
             CommandParameter="{Binding SelectedItem, ElementName=ProductsGroupsListView}"
-            Content="{x:Static wresx:WpfOrderResources.Edit}" />
+            Content="{x:Static wresx:OrderBusinessResources.Edit}" />
         <Button
             Grid.Row="1"
             Grid.Column="3"
             Command="{Binding DeleteCommand}"
             CommandParameter="{Binding SelectedItem, ElementName=ProductsGroupsListView}"
-            Content="{x:Static wresx:WpfOrderResources.Delete}" />
+            Content="{x:Static wresx:OrderBusinessResources.Delete}" />
     </Grid>
 </UserControl>

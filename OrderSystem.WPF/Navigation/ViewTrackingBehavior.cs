@@ -1,4 +1,4 @@
-﻿using OrderSystem.WPF.ViewModels;
+﻿using OrderSystem.Business.ViewModels;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
