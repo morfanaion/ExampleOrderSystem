@@ -1,12 +1,15 @@
-﻿using OrderSystem.Data.Classes;
-using OrderSystem.Data.Managers;
-using OrderSystem.Data.Models;
-using OrderSystem.Data.Validation;
-using OrderSystem.Business.Orchestration.Interfaces;
+﻿using OrderSystem.Business.Orchestration.Interfaces;
 using OrderSystem.Business.Resources;
 using OrderSystem.Business.Services;
 using OrderSystem.Business.ViewModels;
 using OrderSystem.Business.ViewModels.OrderLines;
+using OrderSystem.Business.ViewModels.ProductGroups;
+using OrderSystem.Business.ViewModels.Products;
+using OrderSystem.Data.Classes;
+using OrderSystem.Data.Managers;
+using OrderSystem.Data.Models;
+using OrderSystem.Data.Resources;
+using OrderSystem.Data.Validation;
 
 namespace OrderSystem.Business.Orchestration
 {
@@ -14,11 +17,11 @@ namespace OrderSystem.Business.Orchestration
     {
         public IDataCollection<OrderLine> OrderLinesSource => source;
 
-        public void AddNewOrderLine(ViewModel modalOwner)
+        public OrderLine? AddNewOrderLine(ViewModel modalOwner)
         {
-            OrderLine orderLine = DataManager.Instance.OrderLines.CreateNew();
+            OrderLine? orderLine = DataManager.Instance.OrderLines.CreateNew();
             IValidator validator = new OrderLineValidator(orderLine);
-            OrderLineViewModel orderlineViewModel = new(orderLine, validator, OrderBusinessResources.AddOrderLine);
+            OrderLineViewModel orderlineViewModel = new(orderLine, this, validator, OrderBusinessResources.AddOrderLine);
 
             if (ServiceLocator.GetService<IUiService>().ShowDialog(orderlineViewModel, modalOwner))
             {
@@ -33,7 +36,12 @@ namespace OrderSystem.Business.Orchestration
                     orderLine.SaveCached();
                 }
             }
+            else
+            {
+                orderLine = null;
+            }
             orderlineViewModel.Dispose();
+            return orderLine;
         }
 
         public void DeleteOrderLine(OrderLine orderLine, ViewModel modalOwner)
@@ -51,7 +59,7 @@ namespace OrderSystem.Business.Orchestration
         public void EditOrderLine(OrderLine orderLine, ViewModel modalOwner)
         {
             IValidator validator = new OrderLineValidator(orderLine);
-            OrderLineViewModel orderLineViewModel = new(orderLine, validator, OrderBusinessResources.EditOrderLine);
+            OrderLineViewModel orderLineViewModel = new(orderLine, this, validator, OrderBusinessResources.EditOrderLine);
             
             if (ServiceLocator.GetService<IUiService>().ShowDialog(orderLineViewModel, modalOwner))
             {
@@ -71,5 +79,21 @@ namespace OrderSystem.Business.Orchestration
             }
             orderLineViewModel.Dispose();
         }
+
+        public Product? SearchProduct(IEnumerable<Product> productsLookup, Product? selectedProduct, ViewModel modalOwner)
+        {
+            IProductOrchestrator productOrchestrator = new ProductOrchestrator(productsLookup);
+            ProductsViewModel productsViewModel = new(productOrchestrator);
+            productsViewModel.SelectedItem = selectedProduct;
+            SearchViewModel<Product> searchViewModel = new(string.Format(OrderBusinessResources.SearchObject, OrderResources.Product), productsViewModel);
+            if (ServiceLocator.GetService<IUiService>().ShowDialog(searchViewModel, modalOwner))
+            {
+                selectedProduct = productsViewModel.SelectedItem;
+            }
+            searchViewModel.Dispose();
+            productsViewModel.Dispose();
+            return selectedProduct;
+        }
+            
     }
 }

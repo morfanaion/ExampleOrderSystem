@@ -204,4 +204,16 @@
   <data name="CancelPendingChangesQuestion" xml:space="preserve">
     <value>Weet u zeker dat u de wijzigingen wilt annuleren?</value>
   </data>
+  <data name="SearchObject" xml:space="preserve">
+    <value>{0} zoeken</value>
+  </data>
+  <data name="ClearFilter" xml:space="preserve">
+    <value>Filter wissen</value>
+  </data>
+  <data name="PlacedBetween" xml:space="preserve">
+    <value>Geplaatst tussen</value>
+  </data>
+  <data name="And" xml:space="preserve">
+    <value>en</value>
+  </data>
 </root>

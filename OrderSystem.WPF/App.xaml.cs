@@ -4,6 +4,8 @@ using OrderSystem.Business.ViewModels;
 using OrderSystem.Business.ViewModels.Orders;
 using OrderSystem.Business.ViewModels.ProductGroups;
 using OrderSystem.Business.ViewModels.Products;
+using OrderSystem.Data.Managers;
+using OrderSystem.Data.Resources;
 using OrderSystem.WPF.ResourceDictionaries;
 using OrderSystem.WPF.Services;
 using System.Globalization;
@@ -34,8 +36,8 @@ namespace OrderSystem.WPF
 
             List<ViewModel> tabs = [
                 new OrdersViewModel(new OrderOrchestrator()),
-                new ProductGroupsViewModel(new ProductGroupOrchestrator()),
-                new ProductsViewModel(new ProductOrchestrator())
+                new ProductGroupsViewModel(new ProductGroupOrchestrator(DataManager.Instance.ProductGroups.Where(pg => !pg.IsExpired))),
+                new ProductsViewModel(new ProductOrchestrator(DataManager.Instance.Products.Where(p => !p.IsExpired && !p.ProductGroup!.IsExpired)))
                 ];
 
             MainViewModel viewModel = new MainViewModel(tabs);

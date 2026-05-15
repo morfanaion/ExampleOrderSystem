@@ -2,22 +2,23 @@
 using OrderSystem.Data.Resources;
 using OrderSystem.Business.Classes;
 using OrderSystem.Business.Orchestration.Interfaces;
-using System.Windows.Input;
 
 namespace OrderSystem.Business.ViewModels.OrderLines
 {
-    public class OrderLinesViewModel : ViewModel
+    public class OrderLinesViewModel : ListViewModel<OrderLine>
     {
         private readonly IOrderlineOrchestrator _orchestrator;
-
-        public ICommand AddCommand { get; }
-        public ICommand EditCommand { get; }
-        public ICommand DeleteCommand { get; }
 
         public OrderLinesViewModel(IOrderlineOrchestrator orchestrator)
         {
             _orchestrator = orchestrator;
-            AddCommand = new RelayCommand(() => _orchestrator.AddNewOrderLine(this));
+            AddCommand = new RelayCommand(() =>
+            {
+                if(_orchestrator.AddNewOrderLine(this) is OrderLine newOrderLine)
+                {
+                    SelectedItem = newOrderLine;
+                }
+            });
             EditCommand = new RelayCommand<OrderLine>(orderLine => _orchestrator.EditOrderLine(orderLine!, this), orderLine => orderLine is not null);
             DeleteCommand = new RelayCommand<OrderLine>(orderLine => _orchestrator.DeleteOrderLine(orderLine!, this), orderLine => orderLine is not null);
         }

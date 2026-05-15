@@ -10,30 +10,35 @@ using OrderSystem.Business.ViewModels.ProductGroups;
 
 namespace OrderSystem.Business.Orchestration
 {
-    public class ProductGroupOrchestrator : IProductGroupOrchestrator
+    public class ProductGroupOrchestrator(IEnumerable<ProductGroup> source) : IProductGroupOrchestrator
     {
-        public IDataCollection<ProductGroup> ProductGroupsSource => DataManager.Instance.ProductGroups;
+        public IEnumerable<ProductGroup> ProductGroupsSource => source;
 
-        public void AddNewProductGroup(ViewModel modalOwner)
+        public ProductGroup? AddNewProductGroup(ViewModel modalOwner)
         {
-            ProductGroup group = DataManager.Instance.ProductGroups.CreateNew();
+            ProductGroup? group = DataManager.Instance.ProductGroups.CreateNew();
             IValidator validator = new ProductGroupValidator(group);
             ProductGroupViewModel viewModel = new(group, validator, OrderBusinessResources.AddProductGroup);
 
             if(ServiceLocator.GetService<IUiService>().ShowDialog(viewModel, modalOwner))
             {
                 group.Save();
-                ProductGroupsSource.Add(group);
+                DataManager.Instance.ProductGroups.Add(group);
                 DataManager.Instance.CommitAllChanges();
             }
+            else
+            {
+                group = null;
+            }
             viewModel.Dispose();
+            return group;
         }
 
         public void DeleteProductGroup(ProductGroup productGroup, ViewModel modalOwner)
         {
             if (ServiceLocator.GetService<IUiService>().Confirm(OrderBusinessResources.DeleteProductGroup, string.Format(OrderBusinessResources.ConfirmDeleteProductGroup, productGroup.Name), modalOwner))
             {
-                ProductGroupsSource.Remove(productGroup);
+                DataManager.Instance.ProductGroups.Remove(productGroup);
                 DataManager.Instance.CommitAllChanges();
             }
         }

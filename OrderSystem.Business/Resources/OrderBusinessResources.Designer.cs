@@ -106,6 +106,15 @@ namespace OrderSystem.Business.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to en.
+        /// </summary>
+        public static string And {
+            get {
+                return ResourceManager.GetString("And", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Annuleren.
         /// </summary>
         public static string Cancel {
@@ -138,6 +147,15 @@ namespace OrderSystem.Business.Resources {
         public static string ChooseProductgroup {
             get {
                 return ResourceManager.GetString("ChooseProductgroup", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Filter wissen.
+        /// </summary>
+        public static string ClearFilter {
+            get {
+                return ResourceManager.GetString("ClearFilter", resourceCulture);
             }
         }
         
@@ -313,11 +331,29 @@ namespace OrderSystem.Business.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Geplaatst tussen.
+        /// </summary>
+        public static string PlacedBetween {
+            get {
+                return ResourceManager.GetString("PlacedBetween", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Opslaan.
         /// </summary>
         public static string Save {
             get {
                 return ResourceManager.GetString("Save", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} zoeken.
+        /// </summary>
+        public static string SearchObject {
+            get {
+                return ResourceManager.GetString("SearchObject", resourceCulture);
             }
         }
     }
