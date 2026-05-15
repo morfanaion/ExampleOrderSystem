@@ -36,6 +36,7 @@ namespace OrderSystem.Business.ViewModels.Orders
         private void OrdersChanged(object? sender, NotifyCollectionChangedEventArgs e)
         {
             RaisePropertyChanged(nameof(OrdersSource));
+            RaisePropertyChanged(nameof(ProductFilterLookup));
         }
 
         public override void Dispose()
@@ -102,7 +103,7 @@ namespace OrderSystem.Business.ViewModels.Orders
             }
         }
 
-        public IEnumerable<Product> ProductFilterLookup => DataManager.Instance.Products;
+        public IEnumerable<Product> ProductFilterLookup => _orchestrator.OrdersSource.SelectMany(o => o.OrderLines.Where(ol => ol.Product is not null).Select(ol => ol.Product!)).Distinct().OrderBy(p => p.Name);
 
         private Product? _selectedProductFilter = null;
         public Product? SelectedFilterProduct

@@ -67,13 +67,7 @@ namespace OrderSystem.Business.ViewModels.Products
 
         public override string ViewTitle => OrderResources.Products;
 
-        public IEnumerable<ProductGroup> ProductGroupsFilterLookup =>
-            DataManager.Instance.ProductGroups.Where(productGroup =>
-            {
-                if (!productGroup.IsExpired)
-                    return true;
-                return ProductsSource.Any(product => ReferenceEquals(product.ProductGroup, productGroup));
-            });
+        public IEnumerable<ProductGroup> ProductGroupsFilterLookup => _orchestrator.ProductsSource.Where(p => p.ProductGroup is not null).Select(p => p.ProductGroup!).Distinct().OrderBy(pg => pg.Name);
 
         private ProductGroup? _selectedProductGroupFilter = null;
         public ProductGroup? SelectedFilterProductGroup
