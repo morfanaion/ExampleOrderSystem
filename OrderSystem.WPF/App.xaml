@@ -4,6 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:behaviors="clr-namespace:OrderSystem.WPF.Behaviors"
     xmlns:classes="clr-namespace:OrderSystem.WPF.Classes"
+    xmlns:controls="clr-namespace:OrderSystem.WPF.Controls"
     xmlns:conv="clr-namespace:OrderSystem.WPF.Converters"
     xmlns:local="clr-namespace:OrderSystem.WPF"
     xmlns:navigation="clr-namespace:OrderSystem.WPF.Navigation"
@@ -44,13 +45,15 @@
         <Style BasedOn="{StaticResource BaseControlStyle}" TargetType="{x:Type TabControl}" />
         <Style BasedOn="{StaticResource BaseControlStyle}" TargetType="{x:Type Button}">
             <Setter Property="classes:CommandExtensions.CommitBeforeExecute" Value="True" />
+            <Setter Property="Padding" Value="8,4" />
         </Style>
         <Style BasedOn="{StaticResource ValidationStyleBase}" TargetType="{x:Type TextBox}" />
         <Style BasedOn="{StaticResource ValidationStyleBase}" TargetType="{x:Type DatePicker}" />
         <Style BasedOn="{StaticResource BaseControlStyle}" TargetType="{x:Type Label}" />
         <Style BasedOn="{StaticResource ValidationStyleBase}" TargetType="{x:Type ComboBox}" />
+        <Style BasedOn="{StaticResource ValidationStyleBase}" TargetType="{x:Type controls:SearchComboBox}" />
         <Style BasedOn="{StaticResource BaseControlStyle}" TargetType="{x:Type ListView}">
-            <Setter Property="behaviors:ListViewDoubleClickBehavior.Command" Value="{Binding EditCommand}" />
+            <Setter Property="behaviors:ListViewDoubleClickBehavior.Command" Value="{Binding ItemDoubleClickCommand}" />
         </Style>
 
         <Style x:Key="ValidationTextLabel" TargetType="{x:Type Label}">
@@ -87,5 +90,10 @@
         <DataTemplate DataType="{x:Type vm:MainViewModel}">
             <views:MainView />
         </DataTemplate>
+
+        <DataTemplate DataType="{x:Type vm:SearchViewModel}">
+            <views:SearchView />
+        </DataTemplate>
+
     </Application.Resources>
 </Application>

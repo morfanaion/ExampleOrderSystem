@@ -31,7 +31,8 @@
             Grid.Row="0"
             Grid.Column="0"
             Grid.ColumnSpan="4"
-            ItemsSource="{Binding OrderLinesSource}">
+            ItemsSource="{Binding OrderLinesSource}"
+            SelectedItem="{Binding SelectedItem}">
             <ListView.View>
                 <GridView>
                     <GridViewColumn

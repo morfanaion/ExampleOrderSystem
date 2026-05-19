@@ -7,33 +7,40 @@ using OrderSystem.Business.Resources;
 using OrderSystem.Business.Services;
 using OrderSystem.Business.ViewModels;
 using OrderSystem.Business.ViewModels.Products;
+using OrderSystem.Business.ViewModels.ProductGroups;
+using OrderSystem.Data.Resources;
 
 namespace OrderSystem.Business.Orchestration
 {
-    public class ProductOrchestrator : IProductOrchestrator
+    public class ProductOrchestrator(IEnumerable<Product> source) : IProductOrchestrator
     {
-        public IDataCollection<Product> ProductsSource => DataManager.Instance.Products;
+        public IEnumerable<Product> ProductsSource => source;
 
-        public void AddNewProduct(ViewModel modalOwner)
+        public Product? AddNewProduct(ViewModel modalOwner)
         {
-            Product product = DataManager.Instance.Products.CreateNew();
+            Product? product = DataManager.Instance.Products.CreateNew();
             IValidator validator = new ProductValidator(product);
-            ProductViewModel productViewModel = new(product, validator, OrderBusinessResources.AddProduct);
+            ProductViewModel productViewModel = new(product, this, validator, OrderBusinessResources.AddProduct);
 
             if (ServiceLocator.GetService<IUiService>().ShowDialog(productViewModel, modalOwner))
             {
                 product.Save();
-                ProductsSource.Add(product);
+                DataManager.Instance.Products.Add(product);
                 DataManager.Instance.CommitAllChanges();
             }
+            else
+            {
+                product = null;
+            }
             productViewModel.Dispose();
+            return product;
         }
 
         public void DeleteProduct(Product product, ViewModel modalOwner)
         {
             if(ServiceLocator.GetService<IUiService>().Confirm(OrderBusinessResources.DeleteProduct, string.Format(OrderBusinessResources.ConfirmDeleteProduct, product.Name), modalOwner))
             {
-                ProductsSource.Remove(product);
+                DataManager.Instance.Products.Remove(product);
                 DataManager.Instance.CommitAllChanges();
             }
         }
@@ -41,7 +48,7 @@ namespace OrderSystem.Business.Orchestration
         public void EditProduct(Product product, ViewModel modalOwner)
         {
             IValidator validator = new ProductValidator(product);
-            ProductViewModel productViewModel = new(product, validator, OrderBusinessResources.EditProduct);
+            ProductViewModel productViewModel = new(product, this, validator, OrderBusinessResources.EditProduct);
 
             if(ServiceLocator.GetService<IUiService>().ShowDialog(productViewModel, modalOwner))
             {
@@ -53,6 +60,21 @@ namespace OrderSystem.Business.Orchestration
                 product.Rollback();
             }
             productViewModel.Dispose();
+        }
+
+        public ProductGroup? SearchProductGroup(IEnumerable<ProductGroup> productGroupsLookup, ProductGroup? selectedProductGroup, ViewModel modalOwner)
+        {
+            IProductGroupOrchestrator productGroupOrchestrator = new ProductGroupOrchestrator(productGroupsLookup);
+            ProductGroupsViewModel productGroupsViewModel = new(productGroupOrchestrator);
+            productGroupsViewModel.SelectedItem = selectedProductGroup;
+            SearchViewModel<ProductGroup> searchViewModel = new(string.Format(OrderBusinessResources.SearchObject, OrderResources.ProductGroup), productGroupsViewModel);
+            if (ServiceLocator.GetService<IUiService>().ShowDialog(searchViewModel, modalOwner))
+            {
+                selectedProductGroup = productGroupsViewModel.SelectedItem;
+            }
+            searchViewModel.Dispose();
+            productGroupsViewModel.Dispose();
+            return selectedProductGroup;
         }
     }
 }

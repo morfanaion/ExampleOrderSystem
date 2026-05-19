@@ -4,8 +4,10 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:behaviors="clr-namespace:OrderSystem.WPF.Behaviors"
     xmlns:classes="clr-namespace:OrderSystem.WPF.Classes"
+    xmlns:controls="clr-namespace:OrderSystem.WPF.Controls"
     xmlns:conv="clr-namespace:OrderSystem.WPF.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
     xmlns:local="clr-namespace:OrderSystem.WPF.Views.OrderLines"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:nav="clr-namespace:OrderSystem.WPF.Navigation"
@@ -42,12 +44,13 @@
             Grid.Row="0"
             Grid.Column="0"
             Content="{x:Static resx:OrderResources.Product}" />
-        <ComboBox
+        <controls:SearchComboBox
             Grid.Row="0"
             Grid.Column="1"
             behaviors:ValidationHelper.ValidationState="{Binding Validation[Product]}"
             DisplayMemberPath="Name"
             ItemsSource="{Binding ProductsLookup}"
+            SearchProvider="{Binding ProductSearchProvider}"
             SelectedValue="{Binding CurrentObject.Product}" />
         <TextBlock
             Grid.Row="0"

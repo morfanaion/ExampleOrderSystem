@@ -15,9 +15,9 @@ namespace OrderSystem.Business.Orchestration
     {
         public IDataCollection<Order> OrdersSource => DataManager.Instance.Orders;
 
-        public void AddNewOrder(ViewModel modalOwner)
+        public Order? AddNewOrder(ViewModel modalOwner)
         {
-            Order order = DataManager.Instance.Orders.CreateNew();
+            Order? order = DataManager.Instance.Orders.CreateNew();
             IValidator validator = new OrderValidator(order);
             IOrderlineOrchestrator orderLinesOrchestrator = new OrderlineOrchestrator(order.OrderLines, SaveStrategy.DeferredSave);
             ViewModel orderLinesViewmodel = new OrderLinesViewModel(orderLinesOrchestrator);
@@ -29,7 +29,12 @@ namespace OrderSystem.Business.Orchestration
                 OrdersSource.Add(order);
                 DataManager.Instance.CommitAllChanges();
             }
+            else
+            {
+                order = null;
+            }
             productViewModel.Dispose();
+            return order;
         }
 
         public void DeleteOrder(Order order, ViewModel modalOwner)
@@ -58,6 +63,12 @@ namespace OrderSystem.Business.Orchestration
                 order.Rollback();
             }
             productViewModel.Dispose();
+        }
+
+        public Product? SearchProduct(IEnumerable<Product> productFilterLookup, Product? selectedFilterProduct, OrdersViewModel ordersViewModel)
+        {
+            IOrderlineOrchestrator orderlineOrchestrator = new OrderlineOrchestrator(DataManager.Instance.OrderLines, SaveStrategy.DeferredSave);
+            return orderlineOrchestrator.SearchProduct(productFilterLookup, selectedFilterProduct, ordersViewModel);
         }
     }
 }

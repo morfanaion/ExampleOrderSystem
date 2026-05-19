@@ -6,8 +6,8 @@ namespace OrderSystem.Business.Orchestration.Interfaces
 {
     public interface IProductGroupOrchestrator
     {
-        IDataCollection<ProductGroup> ProductGroupsSource { get; }
-        void AddNewProductGroup(ViewModel modalOwner);
+        IEnumerable<ProductGroup> ProductGroupsSource { get; }
+        ProductGroup? AddNewProductGroup(ViewModel modalOwner);
         void EditProductGroup(ProductGroup productGroup, ViewModel modalOwner);
         void DeleteProductGroup(ProductGroup productGroup, ViewModel modalOwner);
     }
