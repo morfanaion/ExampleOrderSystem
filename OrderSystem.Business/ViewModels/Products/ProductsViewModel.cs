@@ -24,11 +24,21 @@ namespace OrderSystem.Business.ViewModels.Products
                     SelectedItem = newProduct;
                 }
             });
-            EditCommand = new RelayCommand<Product>(product => _orchestrator.EditProduct(product!, this), product => product is not null);
+            EditCommand = new RelayCommand<Product>(EditProductCommandExecute, product => product is not null);
             DeleteCommand = new RelayCommand<Product>(product => _orchestrator.DeleteProduct(product!, this), product => product is not null);
             ProductGroupsFilterSearchProvider = new SearchProvider<ProductGroup?>(() => _orchestrator.SearchProductGroup(ProductGroupsFilterLookup, SelectedFilterProductGroup, this));
             ClearFilterCommand = new RelayCommand(ClearFilterCommandExecute);
             DataManager.Instance.Products.CollectionChanged += ProductsSourceChanged;
+        }
+
+        private void EditProductCommandExecute(Product? product)
+        {
+            if (product is null)
+            {
+                return;
+            }
+            _orchestrator.EditProduct(product!, this);
+            RaisePropertyChanged(nameof(ProductGroupsFilterLookup));
         }
 
         private void ClearFilterCommandExecute()

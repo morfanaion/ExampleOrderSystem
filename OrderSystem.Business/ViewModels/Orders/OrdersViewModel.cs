@@ -26,11 +26,21 @@ namespace OrderSystem.Business.ViewModels.Orders
                     SelectedItem = newOrder;
                 }
             });
-            EditCommand = new RelayCommand<Order>(order => _orchestrator.EditOrder(order!, this), order => order is not null);
+            EditCommand = new RelayCommand<Order>(EditOrderCommandExecute, order => order is not null);
             DeleteCommand = new RelayCommand<Order>(order => _orchestrator.DeleteOrder(order!, this), order => order is not null);
             ClearFilterCommand = new RelayCommand(ClearFilterCommandExecute);
             ProductFilterSearchProvider = new SearchProvider<Product?>(() => _orchestrator.SearchProduct(ProductFilterLookup, SelectedFilterProduct, this));
             DataManager.Instance.Orders.CollectionChanged += OrdersChanged;
+        }
+
+        private void EditOrderCommandExecute(Order? order)
+        {
+            if(order == null)
+            {
+                return;
+            }
+            _orchestrator.EditOrder(order!, this);
+            RaisePropertyChanged(nameof(ProductFilterLookup));
         }
 
         private void OrdersChanged(object? sender, NotifyCollectionChangedEventArgs e)
